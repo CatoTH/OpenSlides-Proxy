@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Openslides autoupdate forwarder.",
   "engines": {
-    "node": ">= 16.13 <17"
+    "node": ">= 16.13 <18"
   },
   "devDependencies": {
     "@types/node": "^16.11.21",

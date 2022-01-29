@@ -24,3 +24,19 @@ OS_PORT=8000 \
 NODE_TLS_REJECT_UNAUTHORIZED=1 \
 npm start
 ```
+
+## Available environment variables
+
+The tool is currently only configured using environment variables.
+
+| Variable               | Description                                                  |
+| ---------------------- | ------------------------------------------------------------ |
+| `FORWARD_URI`          | The base URI or the Antragsgrün installation, including subdomain (if applicable), but without the consultation path |
+| `FORWARD_API_KEY`      | The API Key entered on Antragsgrün in Settings -> This consultation -> Openslides Integration |
+| `OS_USERNAME`          | User account to log in, receiving the updates                |
+| `OS_PASSWORD`          | Password of the user                                         |
+| `OS_HOSTNAME`          | Hostname of Openslides. e.g. demo.openslides.com             |
+| `OS_PORT`              | Port of Openslides. e.g. 443                                 |
+| `OS_ALLOW_SELF_SIGNED` | Optional. If set to `1`, then self-signed certificates will be accepted for OpenSlides domains. Used when connecting to a local development instance. |
+| `OS_IP_FAMILY`         | Optional. If set to either `4` or `6`, then only IPv4 / IPv6 will be used to connect to OpenSlides. Used when being connected from an incorrectly configured network. |
+

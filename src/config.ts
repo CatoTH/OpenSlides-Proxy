@@ -8,8 +8,16 @@ export interface Configuration {
   openSlidesUsername: string;
   openSlidesPassword: string;
   openSlidesAllowSelfSignedCerts: boolean;
+  openSlidesIpFamily: number;
   forwardUri: string;
   forwardApiKey: string;
+}
+
+let osIpFamily;
+if (process.env.OS_IP_FAMILY === '4' || process.env.OS_IP_FAMILY === '6') {
+  osIpFamily = parseInt(process.env.OS_IP_FAMILY, 10);
+} else {
+  osIpFamily = null;
 }
 
 export default {
@@ -18,6 +26,7 @@ export default {
   openSlidesUsername: process.env.OS_USERNAME ?? '',
   openSlidesPassword: process.env.OS_PASSWORD ?? '',
   openSlidesAllowSelfSignedCerts: (process.env.OS_ALLOW_SELF_SIGNED === '1'),
+  openSlidesIpFamily: osIpFamily,
   forwardUri: process.env.FORWARD_URI ?? '',
   forwardApiKey: process.env.FORWARD_API_KEY ?? '',
 } as Configuration;

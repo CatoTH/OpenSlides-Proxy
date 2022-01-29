@@ -12,7 +12,8 @@ export class EventForwarder
       baseURL: this.config.forwardUri,
       timeout: 15000,
       headers: {
-        "X-API-Key": this.config.forwardApiKey
+        "X-API-Key": this.config.forwardApiKey,
+        "Content-Type": "application/json"
       }
     });
   }

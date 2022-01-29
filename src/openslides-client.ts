@@ -1,7 +1,8 @@
 import * as https from "https";
 import { Configuration } from './config';
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 import { EventListener } from './event-listener';
+import {RequestOptions} from "https";
 
 export class OpenslidesClient {
   private instance: AxiosInstance;
@@ -15,10 +16,20 @@ export class OpenslidesClient {
     }
 
     this.config = config;
-    this.instance = axios.create({
+
+    const instanceConfig: AxiosRequestConfig = {
       baseURL: 'https://' + this.config.openSlidesHostname + ':' + this.config.openSlidesPort + '/',
       timeout: 15000,
-    });
+    };
+
+    if (config.openSlidesIpFamily === 4) {
+      console.log("Using IPv4 only");
+      instanceConfig.httpsAgent = new https.Agent({ family: 4 });
+    } else if (config.openSlidesIpFamily === 6) {
+      console.log("Using IPv4 only");
+      instanceConfig.httpsAgent = new https.Agent({ family: 4 });
+    }
+    this.instance = axios.create(instanceConfig);
 
     this.init();
   }
@@ -45,7 +56,7 @@ export class OpenslidesClient {
   }
 
   private startListening() {
-    const req = https.request({
+    const requestOptions: RequestOptions = {
       hostname: this.config.openSlidesHostname,
       port: this.config.openSlidesPort,
       path: '/system/autoupdate?change_id=0',
@@ -53,7 +64,14 @@ export class OpenslidesClient {
       headers: {
         "Cookie": "OpenSlidesSessionID=" + this.sessionId
       }
-    }, (res) => {
+    };
+    if (this.config.openSlidesIpFamily === 4) {
+      requestOptions.family = 4;
+    } else if (this.config.openSlidesIpFamily === 6) {
+      requestOptions.family = 6;
+    }
+
+    const req = https.request(requestOptions, (res) => {
       let buffer = '';
       res.on('data', (chunk) => {
         buffer += chunk;
