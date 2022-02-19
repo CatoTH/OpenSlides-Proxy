@@ -26,7 +26,7 @@ export class OpenslidesClient {
       console.log("Using IPv4 only");
       instanceConfig.httpsAgent = new https.Agent({ family: 4 });
     } else if (config.openSlidesIpFamily === 6) {
-      console.log("Using IPv4 only");
+      console.log("Using IPv6 only");
       instanceConfig.httpsAgent = new https.Agent({ family: 4 });
     }
     this.instance = axios.create(instanceConfig);
