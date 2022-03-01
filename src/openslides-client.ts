@@ -81,7 +81,8 @@ export class OpenslidesClient {
         }
       });
       res.on('end', () => {
-        console.log("end");
+        console.log("Connection ended");
+        this.reconnect();
       });
     });
 
@@ -89,6 +90,14 @@ export class OpenslidesClient {
       console.error(e);
     });
     req.end();
+  }
+
+  private reconnect()
+  {
+    console.warn("Reconnecting in 1 second");
+    setTimeout(() => {
+      this.startListening();
+    }, 1000);
   }
 
   public addListener(listener: EventListener)
