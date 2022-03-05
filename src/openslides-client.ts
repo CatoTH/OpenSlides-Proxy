@@ -88,13 +88,14 @@ export class OpenslidesClient {
 
     req.on('error', (e) => {
       console.error(e);
+      this.reconnect();
     });
     req.end();
   }
 
   private reconnect()
   {
-    console.warn("Reconnecting in 1 second");
+    console.warn("Reconnecting in 5 seconds");
     setTimeout(() => {
       this.startListening();
     }, 1000);
